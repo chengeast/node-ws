@@ -1,594 +1,1068 @@
-import { useState, useEffect } from "react";
-import { 
-  Rocket, 
-  Building2, 
-  Users, 
-  Calendar, 
-  Zap, 
-  Globe, 
-  ChevronDown,
-  Leaf,
-  Database,
-  Brain,
-  Star,
-  Mountain
-} from "lucide-react";
-
-export default function App() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const missionTimeline = [
-    {
-      year: "2026",
-      title: "火星轨道站",
-      description: "部署首个载人火星轨道空间站，作为登陆中转基地",
-      icon: <Globe className="w-8 h-8 text-mars-accent" />
-    },
-    {
-      year: "2028",
-      title: "首个人类基地",
-      description: "建立永久性居住舱与生命维持系统，支持4名宇航员长期驻留",
-      icon: <Building2 className="w-8 h-8 text-mars-accent" />
-    },
-    {
-      year: "2032",
-      title: "水冰开采",
-      description: "启动极地水冰资源开采，实现氧气与燃料自给",
-      icon: <Zap className="w-8 h-8 text-mars-accent" />
-    },
-    {
-      year: "2040",
-      title: "封闭生态圈",
-      description: "建成10平方公里生物圈，实现食物60%自给",
-      icon: <Leaf className="w-8 h-8 text-mars-accent" />
-    },
-    {
-      year: "2050",
-      title: "城市雏形",
-      description: "人口突破1000人，建立首个穹顶城市，实现能源完全自给",
-      icon: <Users className="w-8 h-8 text-mars-accent" />
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>火星定居计划 - 人类星际文明新纪元</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --space-dark: #0a0e17;
+      --space-darker: #080b12;
+      --space-light: #e0e0e0;
+      --mars-accent: #e63946;
+      --amber: #f77f00;
+      --cyan: #00b4d8;
     }
-  ];
-
-  const coreTechnologies = [
-    {
-      title: "核聚变推进",
-      description: "将火星航行时间从6个月缩短至45天",
-      icon: <Zap className="w-10 h-10" />,
-      gradient: "from-amber-400 to-rose-500"
-    },
-    {
-      title: "3D打印基地",
-      description: "使用火星土壤原位建造居住舱与基础设施",
-      icon: <Building2 className="w-10 h-10" />,
-      gradient: "from-cyan-400 to-blue-500"
-    },
-    {
-      title: "AI生态系统管理",
-      description: "自主调节生命支持系统与资源分配",
-      icon: <Brain className="w-10 h-10" />,
-      gradient: "from-emerald-400 to-teal-500"
-    },
-    {
-      title: "水培农业网络",
-      description: "零重力高效作物培育系统，单平方米年产粮150kg",
-      icon: <Leaf className="w-10 h-10" />,
-      gradient: "from-lime-400 to-green-600"
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-  ];
-
-  const teamMembers = [
-    {
-      name: "Dr. Elena Rodriguez",
-      role: "首席地质学家",
-      expertise: "火星水文与资源勘探",
-      image: "https://placehold.co/300x300/1e3a8a/ffffff?text=Geologist"
-    },
-    {
-      name: "Dr. Kenji Tanaka",
-      role: "生命支持系统主任",
-      expertise: "封闭生态系统设计",
-      image: "https://placehold.co/300x300/4f1d0e/ffffff?text=Biologist"
-    },
-    {
-      name: "Commander Maya Singh",
-      role: "任务指挥官",
-      expertise: "深空任务领导与危机管理",
-      image: "https://placehold.co/300x300/1e293b/ffffff?text=Astronaut"
-    },
-    {
-      name: "Prof. David Chen",
-      role: "人工智能总监",
-      expertise: "自主系统与机器人集群",
-      image: "https://placehold.co/300x300/431407/ffffff?text=Engineer"
+    
+    body {
+      background-color: var(--space-dark);
+      color: var(--space-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 30% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 30%);
+      background-size: cover;
     }
-  ];
-
-  return (
-    <div className="min-h-screen bg-space-dark text-space-light font-sans">
-      {/* 太空背景 */}
-      <div 
-        className="fixed inset-0 z-0 opacity-30"
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
-            radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.15) 0%, transparent 25%),
-            radial-gradient(circle at 30% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 30%)
-          `,
-          backgroundSize: "cover",
-          backgroundAttachment: "fixed"
-        }}
-      >
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEuNSIgZmlsbD0iIzQ0NTRkZCIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==')] opacity-20"></div>
+    
+    .bg-space-dark {
+      background-color: var(--space-dark);
+    }
+    
+    .bg-space-darker {
+      background-color: var(--space-darker);
+    }
+    
+    .text-space-light {
+      color: var(--space-light);
+    }
+    
+    .text-mars-accent {
+      color: var(--mars-accent);
+    }
+    
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      background-image: linear-gradient(to right, var(--mars-accent), #f77f00);
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+    }
+    
+    .card {
+      background: rgba(10, 14, 23, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+    
+    .icon-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.15) 0%, rgba(247, 127, 0, 0.15) 100%);
+    }
+    
+    /* 导航栏样式 */
+    nav {
+      position: fixed;
+      width: 100%;
+      z-index: 50;
+      transition: all 0.3s ease;
+      padding: 16px 0;
+      background: rgba(10, 14, 23, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(230, 57, 70, 0.1);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--mars-accent);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .nav-link {
+      color: rgba(224, 224, 224, 0.8);
+      text-decoration: none;
+      position: relative;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--mars-accent);
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--mars-accent);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* 英雄区域 */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 0;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://placehold.co/1920x1080/1e3a8a/4f1d0e?text=Mars+Surface') no-repeat center center/cover;
+      opacity: 0.2;
+      mask-image: linear-gradient(to bottom, transparent 10%, black 90%);
+    }
+    
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10, 14, 23, 0.3) 0%, var(--space-dark) 100%);
+    }
+    
+    .hero-content {
+      text-align: center;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(230, 57, 70, 0.15);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      margin-bottom: 24px;
+      color: #f77f00;
+      font-weight: 500;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    
+    .hero h2 {
+      font-size: 2rem;
+      color: rgba(224, 224, 224, 0.8);
+      margin-bottom: 32px;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      color: rgba(224, 224, 224, 0.8);
+      margin-bottom: 40px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 8px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      color: white;
+      box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(230, 57, 70, 0.4);
+    }
+    
+    .btn-secondary {
+      background: rgba(10, 14, 23, 0.7);
+      color: var(--mars-accent);
+      border: 1px solid rgba(230, 57, 70, 0.5);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(10, 14, 23, 0.9);
+      border-color: var(--mars-accent);
+    }
+    
+    .scroll-down {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(230, 57, 70, 0.7);
+      animation: bounce 2s infinite;
+      font-size: 24px;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-15px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+    }
+    
+    /* 为什么是火星 */
+    .section {
+      padding: 80px 0;
+      position: relative;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+    
+    .section-title p {
+      color: rgba(224, 224, 224, 0.8);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    
+    .feature-card {
+      padding: 32px;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(230, 57, 70, 0.5);
+    }
+    
+    .feature-icon {
+      color: var(--mars-accent);
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #f77f00 0%, var(--mars-accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* 基地区域 */
+    .base-section {
+      background: linear-gradient(135deg, var(--space-darker) 0%, #0c0f19 100%);
+    }
+    
+    .base-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    
+    .base-content {
+      padding: 40px;
+    }
+    
+    .base-image {
+      position: relative;
+      height: 500px;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    
+    .base-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://placehold.co/800x600/431407/ffffff?text=Mars+Base') no-repeat center center/cover;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    }
+    
+    .base-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(to top, var(--space-dark), transparent);
+      text-align: center;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    
+    .stat-card {
+      background: rgba(230, 57, 70, 0.1);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--mars-accent);
+      margin-bottom: 4px;
+    }
+    
+    /* 核心科技 */
+    .tech-section {
+      background: linear-gradient(135deg, #0a0e17 0%, #080b12 100%);
+    }
+    
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    
+    .tech-card {
+      padding: 32px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tech-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 180, 216, 0.5);
+    }
+    
+    .tech-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+    }
+    
+    .tech-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* 时间线 */
+    .timeline-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .timeline-track {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, rgba(230, 57, 70, 0.3), rgba(100, 50, 200, 0.3));
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      display: flex;
+      margin-bottom: 40px;
+    }
+    
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    
+    .timeline-year {
+      width: 150px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .year-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--mars-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 16px;
+    }
+    
+    .timeline-content {
+      width: calc(50% - 75px);
+      padding: 24px;
+      border-radius: 16px;
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      position: relative;
+    }
+    
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      width: 20px;
+      height: 20px;
+      background: var(--space-dark);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      transform: rotate(45deg);
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content::before {
+      right: -10px;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content::before {
+      left: -10px;
+    }
+    
+    .timeline-content h3 {
+      color: var(--mars-accent);
+      margin-bottom: 8px;
+    }
+    
+    /* 加入我们 */
+    .join-section {
+      background: linear-gradient(135deg, var(--space-dark) 0%, #0c0f19 100%);
+    }
+    
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .role-card {
+      padding: 32px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .role-icon {
+      font-size: 40px;
+      color: var(--mars-accent);
+      margin-bottom: 20px;
+    }
+    
+    .role-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .role-qual {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(230, 57, 70, 0.15);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      margin-bottom: 16px;
+      color: var(--mars-accent);
+      font-weight: 500;
+    }
+    
+    .apply-box {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 32px;
+      border-radius: 20px;
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      text-align: center;
+    }
+    
+    .apply-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: white;
+      font-size: 28px;
+    }
+    
+    /* 页脚 */
+    footer {
+      background: var(--space-darker);
+      border-top: 1px solid rgba(230, 57, 70, 0.2);
+      padding: 48px 0 24px;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+    
+    .footer-col h4 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .footer-links a {
+      display: block;
+      color: rgba(224, 224, 224, 0.7);
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: color 0.3s ease;
+      position: relative;
+      padding-left: 12px;
+    }
+    
+    .footer-links a:hover {
+      color: var(--mars-accent);
+    }
+    
+    .footer-links a::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--mars-accent);
+      font-size: 1.5rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: var(--mars-accent);
+    }
+    
+    .social-icon:hover {
+      background: var(--mars-accent);
+      color: white;
+      transform: translateY(-3px);
+      border-color: var(--mars-accent);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(230, 57, 70, 0.1);
+      color: rgba(224, 224, 224, 0.5);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .base-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .base-image {
+        height: 400px;
+      }
+      
+      .timeline-item {
+        flex-direction: column !important;
+      }
+      
+      .timeline-year, .timeline-content {
+        width: 100% !important;
+      }
+      
+      .timeline-content::before {
+        display: none;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav>
+    <div class="container">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <i class="fas fa-rocket logo-icon"></i>
+          <span>ARES COLONY</span>
+        </a>
+        <div class="nav-links">
+          <a href="#why-mars" class="nav-link">探索</a>
+          <a href="#base" class="nav-link">基地</a>
+          <a href="#technology" class="nav-link">科技</a>
+          <a href="#timeline" class="nav-link">时间线</a>
+          <a href="#join" class="nav-link">加入</a>
+        </div>
       </div>
-
-      {/* 导航栏 */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrollY > 50 ? "bg-space-dark/90 backdrop-blur-sm py-2 shadow-lg" : "bg-transparent py-4"}`}>
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <Rocket className="w-8 h-8 text-mars-accent animate-pulse" />
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
-              ARES COLONY
-            </span>
-          </div>
-          
-          <div className="hidden md:flex space-x-10">
-            {["探索", "基地", "科技", "时间线", "加入"].map((item) => (
-              <a 
-                key={item} 
-                href={`#${item.toLowerCase()}`} 
-                className="text-space-light/80 hover:text-mars-accent font-medium transition-all relative group"
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-mars-accent transition-all group-hover:w-full"></span>
-              </a>
-            ))}
-          </div>
-          
-          <button className="md:hidden text-space-light/80 hover:text-mars-accent">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      {/* 英雄区域 */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
-        <div className="absolute inset-0 z-0">
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-20"
-            style={{
-              backgroundImage: "url('https://placehold.co/1920x1080/1e3a8a/4f1d0e?text=Mars+Surface')",
-              maskImage: "linear-gradient(to bottom, transparent 10%, black 90%)"
-            }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-space-dark/30 to-space-dark"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 z-10 text-center max-w-4xl">
-          <div className="inline-block mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-rose-500/20 border border-amber-500/30">
-            <span className="text-amber-300 font-medium flex items-center justify-center">
-              <Star className="w-4 h-4 mr-2" /> 人类星际文明新纪元开启
-            </span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
-              首个人类火星永久定居点
-            </span>
-            <span className="mt-2 block text-space-light/90 text-2xl md:text-3xl font-light">
-              2040年前建立自给自足文明
-            </span>
-          </h1>
-          
-          <p className="text-xl text-space-light/80 mb-10">
-            人类首次成为跨行星物种，开启多星球文明时代
-          </p>
-          
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="px-8 py-4 bg-gradient-to-r from-mars-accent to-rose-600 hover:from-rose-500 hover:to-rose-600 text-white font-bold rounded-xl shadow-lg hover:shadow-rose-500/30 transition-all transform hover:-translate-y-1">
-              申请加入任务
-            </button>
-            <button className="px-8 py-4 bg-space-darker border border-mars-accent/30 hover:bg-space-dark/80 text-mars-accent font-bold rounded-xl transition-all">
-              探索基地设计
-            </button>
-          </div>
-          
-          <div className="mt-20 animate-bounce">
-            <ChevronDown className="w-8 h-8 mx-auto text-mars-accent/70" />
-          </div>
-        </div>
-      </section>
-
-      {/* 为什么是火星 */}
-      <section id="探索" className="py-20 bg-space-dark relative overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-5">
-          <div className="absolute top-10 left-1/4 w-72 h-72 bg-amber-500 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-1/3 w-96 h-96 bg-rose-600 rounded-full blur-4xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 z-10">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
-                为什么选择火星？
-              </span>
-            </h2>
-            <p className="text-space-light/80 text-lg">
-              基于NASA与ESA 20年探测数据，火星是太阳系内除地球外最宜居星球
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "水资源丰富",
-                description: "极地冰盖含水量超北美五大湖总和，地下冰层覆盖40%地表",
-                icon: <Mountain className="w-12 h-12 text-mars-accent" />
-              },
-              {
-                title: "24.5小时昼夜",
-                description: "与地球相似的自转周期，便于建立自然生物节律",
-                icon: <Calendar className="w-12 h-12 text-mars-accent" />
-              },
-              {
-                title: "二氧化碳大气",
-                description: "95% CO₂大气层可转化为氧气与燃料，土壤含植物必需矿物质",
-                icon: <Leaf className="w-12 h-12 text-mars-accent" />
-              }
-            ].map((item, index) => (
-              <div 
-                key={index} 
-                className="bg-space-darker/70 backdrop-blur-sm rounded-2xl p-8 border border-mars-accent/10 hover:border-mars-accent/30 transition-all relative overflow-hidden group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-mars-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative z-10">
-                  <div className="mb-6">{item.icon}</div>
-                  <h3 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-mars-accent">
-                    {item.title}
-                  </h3>
-                  <p className="text-space-light/70 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 基地区域 */}
-      <section id="基地" className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-mars-accent">
-                奥林帕斯基地
-              </span>
-            </h2>
-            <p className="text-space-light/80 text-lg">
-              人类首个永久性火星定居点，2030年投入运营
-            </p>
-          </div>
-          
-          <div className="bg-space-darker/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-mars-accent/20">
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              <div className="p-10 lg:p-16">
-                <div className="mb-8 flex items-center">
-                  <div className="p-3 bg-gradient-to-r from-amber-500/20 to-rose-500/20 rounded-xl mr-4">
-                    <Building2 className="w-8 h-8 text-amber-300" />
-                  </div>
-                  <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-mars-accent">
-                    基地核心架构
-                  </h3>
-                </div>
-                
-                <div className="space-y-6 mb-10">
-                  {[
-                    {
-                      title: "防护穹顶",
-                      desc: "多层复合材料抵御辐射与微陨石，内部气压1个大气压"
-                    },
-                    {
-                      title: "地下居住区",
-                      desc: "20米深地下隧道网络，恒温22°C，防宇宙辐射"
-                    },
-                    {
-                      title: "资源循环系统",
-                      desc: "水回收率98%，空气再生率95%，食物生产自给率60%"
-                    }
-                  ].map((item, index) => (
-                    <div key={index} className="border-l-2 border-mars-accent pl-4 py-1">
-                      <h4 className="font-bold text-lg">{item.title}</h4>
-                      <p className="text-space-light/70">{item.desc}</p>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex flex-wrap gap-4">
-                  <div className="bg-gradient-to-r from-purple-600/20 to-indigo-500/20 border border-purple-500/30 rounded-xl p-4 w-full sm:w-auto text-center">
-                    <div className="text-2xl font-bold text-purple-400">128</div>
-                    <div className="text-sm">居住单元</div>
-                  </div>
-                  <div className="bg-gradient-to-r from-cyan-600/20 to-teal-500/20 border border-cyan-500/30 rounded-xl p-4 w-full sm:w-auto text-center">
-                    <div className="text-2xl font-bold text-cyan-400">42</div>
-                    <div className="text-sm">科研实验室</div>
-                  </div>
-                  <div className="bg-gradient-to-r from-emerald-600/20 to-green-500/20 border border-emerald-500/30 rounded-xl p-4 w-full sm:w-auto text-center">
-                    <div className="text-2xl font-bold text-emerald-400">15</div>
-                    <div className="text-sm">生态穹顶</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="relative h-96 lg:h-auto">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: "url('https://placehold.co/800x600/431407/ffffff?text=Mars+Base')",
-                    clipPath: "polygon(0 0, 100% 0, 100% 85%, 0 100%)",
-                    WebkitClipPath: "polygon(0 0, 100% 0, 100% 85%, 0 100%)"
-                  }}
-                ></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-space-dark to-transparent">
-                  <div className="text-center">
-                    <p className="text-mars-accent font-medium">奥林帕斯山脚下 · 北纬18.6°</p>
-                    <p className="text-space-light/80 text-sm mt-1">人类首个多星球文明前哨站</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 核心科技 */}
-      <section id="科技" className="py-20 bg-space-darker relative overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-20">
-          <div className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-cyan-500 to-blue-700 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-gradient-to-br from-amber-500 to-rose-600 rounded-full blur-2xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 z-10">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-blue-400">
-                革命性技术
-              </span>
-            </h2>
-            <p className="text-space-light/80 text-lg">
-              突破性创新使火星定居成为现实
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreTechnologies.map((tech, index) => (
-              <div 
-                key={index}
-                className="bg-space-dark/70 backdrop-blur-sm rounded-2xl p-8 border border-cyan-500/10 hover:border-cyan-500/30 transition-all relative group overflow-hidden"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${tech.gradient} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
-                <div className="relative z-10 text-center">
-                  <div className={`w-16 h-16 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br ${tech.gradient} mb-6 transform transition-transform group-hover:scale-110`}>
-                    {tech.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-blue-300">
-                    {tech.title}
-                  </h3>
-                  <p className="text-space-light/80 leading-relaxed">
-                    {tech.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 时间线 */}
-      <section id="时间线" className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
-                人类火星纪元
-              </span>
-            </h2>
-            <p className="text-space-light/80 text-lg">
-              从首次登陆到永久定居的里程碑
-            </p>
-          </div>
-          
-          <div className="relative max-w-4xl mx-auto">
-            {/* 时间线轨道 */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-mars-accent/30 to-purple-600/30 transform -translate-x-1/2 hidden md:block"></div>
-            
-            {missionTimeline.map((mission, index) => (
-              <div 
-                key={index} 
-                className={`flex flex-col md:flex-row ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} mb-12 group`}
-              >
-                <div className="md:w-5/12 relative mb-8 md:mb-0 flex justify-center">
-                  <div className="w-48 h-48 rounded-2xl bg-gradient-to-br from-purple-900/50 to-indigo-900/50 border-2 border-purple-500/30 flex items-center justify-center p-4 transform transition-transform hover:scale-105 group-hover:border-purple-500/60">
-                    {mission.icon}
-                    <div className="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-purple-600 border-2 border-space-dark flex items-center justify-center text-xs font-bold">
-                      {mission.year}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className={`md:w-7/12 flex flex-col justify-center ${index % 2 === 0 ? 'md:items-end md:pr-16' : 'md:pl-16'}`}>
-                  <div className="bg-space-darker/70 backdrop-blur-sm border border-purple-500/20 rounded-xl p-6 max-w-md mx-auto md:mx-0 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div className="relative z-10">
-                      <div className="text-purple-400 font-medium mb-2">{mission.year} 里程碑</div>
-                      <h3 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-pink-400">
-                        {mission.title}
-                      </h3>
-                      <p className="text-space-light/80 leading-relaxed">
-                        {mission.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 加入我们 */}
-      <section id="加入" className="py-20 bg-gradient-to-b from-space-dark to-space-darker relative overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-30">
-          <div className="absolute top-10 right-10 w-48 h-48 bg-amber-500 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-mars-accent rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 z-10">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-400">
-                加入星际先驱者
-              </span>
-            </h2>
-            <p className="text-space-light/80 text-lg">
-              选拔要求：顶尖专业能力、心理韧性、团队协作精神
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {[
-              { title: "科学家", desc: "地质/生物/气候研究专家" },
-              { title: "工程师", desc: "生命支持/能源/建筑系统专家" },
-              { title: "医疗团队", desc: "太空医学/外科/心理专家" },
-              { title: "运营专家", desc: "资源管理/跨文化协作专家" }
-            ].map((role, index) => (
-              <div 
-                key={index}
-                className="bg-space-dark/60 backdrop-blur-sm rounded-2xl p-8 border border-amber-500/20 hover:border-amber-500/40 transition-all relative overflow-hidden group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative z-10 text-center">
-                  <div className="text-amber-400 font-bold text-3xl mb-2">
-                    {["博士", "硕士+", "医师", "专家"][index]}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-400">
-                    {role.title}
-                  </h3>
-                  <p className="text-space-light/70 mb-4">
-                    {role.desc}
-                  </p>
-                  <button className="px-4 py-2 text-sm bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-300 rounded-lg border border-amber-500/30 hover:border-amber-500/60 transition-all">
-                    申请条件
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="max-w-3xl mx-auto text-center bg-space-dark/80 backdrop-blur-sm rounded-2xl p-8 border border-amber-500/30">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-rose-500 flex items-center justify-center">
-                <Star className="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-300">
-              首批100名定居者选拔中
-            </h3>
-            <p className="text-space-light/80 text-lg mb-6">
-              2026-2028年进行极端环境模拟训练，2028年启程前往火星
-            </p>
-            <button className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-yellow-500 hover:to-amber-600 text-space-dark font-bold rounded-xl shadow-lg hover:shadow-yellow-500/30 transition-all transform hover:-translate-y-1">
-              提交申请
-            </button>
-            <p className="mt-4 text-sm text-space-light/60">
-              选拔成功率：0.8% | 下一批申请开放：2026年3月
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 页脚 */}
-      <footer className="bg-space-darker border-t border-mars-accent/20 py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center mb-4">
-                <Rocket className="w-8 h-8 text-mars-accent mr-2" />
-                <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
-                  ARES COLONY
-                </span>
-              </div>
-              <p className="text-space-light/70 mb-6 max-w-xl">
-                人类首个火星永久定居计划，由全球航天机构与科研组织联合推进，目标在2040年前建立自给自足的人类文明前哨站。
-              </p>
-              
-              <div className="flex space-x-4">
-                {["https://placehold.co/40x40/1e3a8a/ffffff?text=F", "https://placehold.co/40x40/1e3a8a/ffffff?text=T", "https://placehold.co/40x40/1e3a8a/ffffff?text=I", "https://placehold.co/40x40/1e3a8a/ffffff?text=Y"].map((icon, index) => (
-                  <div key={index} className="w-10 h-10 rounded-full bg-space-dark flex items-center justify-center border border-mars-accent/20 hover:border-mars-accent transition-colors">
-                    {index === 0 && <span className="text-blue-400 font-bold">f</span>}
-                    {index === 1 && <span className="text-blue-500 font-bold">t</span>}
-                    {index === 2 && <span className="text-cyan-400 font-bold">in</span>}
-                    {index === 3 && <span className="text-red-500 font-bold">Y</span>}
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
-                任务阶段
-              </h4>
-              <ul className="space-y-3">
-                {["轨道站建设", "无人货运任务", "首次载人登陆", "基地扩建", "生态闭环"].map((item, index) => (
-                  <li key={index}>
-                    <a href="#" className="text-space-light/70 hover:text-mars-accent transition-colors flex items-center">
-                      <span className="w-1.5 h-1.5 bg-mars-accent rounded-full mr-3"></span>
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
-                联系我们
-              </h4>
-              <ul className="space-y-3 text-space-light/70">
-                <li className="flex items-start">
-                  <span className="mt-1 mr-3">📍</span>
-                  <span>火星奥林帕斯基地建设指挥部<br />地球分部：海南文昌航天城</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mt-1 mr-3">✉️</span>
-                  <span>apply@ares-colony.mars</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mt-1 mr-3">📡</span>
-                  <span>深空通信频道：ARES-2040</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-mars-accent/20 mt-12 pt-8 text-center text-space-light/50 text-sm">
-            <p>
-              ARES COLONY © 2025-2050 | 人类多星球文明计划 | 数据更新于2025年12月19日
-            </p>
-            <p className="mt-2 text-xs">
-              本页面为概念展示，实际任务规划以国际火星开发署(IMDA)官方文件为准
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
-  );
-}
+  </nav>
+
+  <!-- 英雄区域 -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="badge">
+        <i class="fas fa-star"></i> 人类星际文明新纪元开启
+      </div>
+      <h1 class="gradient-text">首个人类火星永久定居点</h1>
+      <h2>2040年前建立自给自足文明</h2>
+      <p>人类首次成为跨行星物种，开启多星球文明时代</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">申请加入任务</a>
+        <a href="#" class="btn btn-secondary">探索基地设计</a>
+      </div>
+      <div class="scroll-down">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- 为什么是火星 -->
+  <section id="why-mars" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">为什么选择火星？</h2>
+        <p>基于NASA与ESA 20年探测数据，火星是太阳系内除地球外最宜居星球</p>
+      </div>
+      <div class="features-grid">
+        <div class="card feature-card">
+          <i class="fas fa-mountain feature-icon"></i>
+          <h3>水资源丰富</h3>
+          <p>极地冰盖含水量超北美五大湖总和，地下冰层覆盖40%地表</p>
+        </div>
+        <div class="card feature-card">
+          <i class="fas fa-calendar feature-icon"></i>
+          <h3>24.5小时昼夜</h3>
+          <p>与地球相似的自转周期，便于建立自然生物节律</p>
+        </div>
+        <div class="card feature-card">
+          <i class="fas fa-leaf feature-icon"></i>
+          <h3>二氧化碳大气</h3>
+          <p>95% CO₂大气层可转化为氧气与燃料，土壤含植物必需矿物质</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 基地区域 -->
+  <section id="base" class="section base-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">奥林帕斯基地</h2>
+        <p>人类首个永久性火星定居点，2030年投入运营</p>
+      </div>
+      <div class="base-container">
+        <div class="base-content">
+          <div class="flex items-center mb-8">
+            <div class="icon-box">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3 class="gradient-text">基地核心架构</h3>
+          </div>
+          
+          <div class="space-y-6 mb-10">
+            <div class="border-l-2 border-mars-accent pl-4 py-1">
+              <h4 class="font-bold text-lg">防护穹顶</h4>
+              <p>多层复合材料抵御辐射与微陨石，内部气压1个大气压</p>
+            </div>
+            <div class="border-l-2 border-mars-accent pl-4 py-1">
+              <h4 class="font-bold text-lg">地下居住区</h4>
+              <p>20米深地下隧道网络，恒温22°C，防宇宙辐射</p>
+            </div>
+            <div class="border-l-2 border-mars-accent pl-4 py-1">
+              <h4 class="font-bold text-lg">资源循环系统</h4>
+              <p>水回收率98%，空气再生率95%，食物生产自给率60%</p>
+            </div>
+          </div>
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">128</div>
+              <div>居住单元</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">42</div>
+              <div>科研实验室</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">15</div>
+              <div>生态穹顶</div>
+            </div>
+          </div>
+        </div>
+        <div class="base-image">
+          <div class="base-info">
+            <p class="text-mars-accent font-medium">奥林帕斯山脚下 · 北纬18.6°</p>
+            <p class="text-space-light/80 text-sm mt-1">人类首个多星球文明前哨站</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心科技 -->
+  <section id="technology" class="section tech-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">革命性技术</h2>
+        <p>突破性创新使火星定居成为现实</p>
+      </div>
+      <div class="tech-grid">
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3>核聚变推进</h3>
+          <p>将火星航行时间从6个月缩短至45天</p>
+        </div>
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <h3>3D打印基地</h3>
+          <p>使用火星土壤原位建造居住舱与基础设施</p>
+        </div>
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>AI生态系统管理</h3>
+          <p>自主调节生命支持系统与资源分配</p>
+        </div>
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3>水培农业网络</h3>
+          <p>零重力高效作物培育系统，单平方米年产粮150kg</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 时间线 -->
+  <section id="timeline" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">人类火星纪元</h2>
+        <p>从首次登陆到永久定居的里程碑</p>
+      </div>
+      <div class="timeline-container">
+        <div class="timeline-track"></div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2026</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2026 里程碑</div>
+            <h3>火星轨道站</h3>
+            <p>部署首个载人火星轨道空间站，作为登陆中转基地</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2028</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2028 里程碑</div>
+            <h3>首个人类基地</h3>
+            <p>建立永久性居住舱与生命维持系统，支持4名宇航员长期驻留</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2032</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2032 里程碑</div>
+            <h3>水冰开采</h3>
+            <p>启动极地水冰资源开采，实现氧气与燃料自给</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2040</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2040 里程碑</div>
+            <h3>封闭生态圈</h3>
+            <p>建成10平方公里生物圈，实现食物60%自给</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2050</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2050 里程碑</div>
+            <h3>城市雏形</h3>
+            <p>人口突破1000人，建立首个穹顶城市，实现能源完全自给</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 加入我们 -->
+  <section id="join" class="section join-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">加入星际先驱者</h2>
+        <p>选拔要求：顶尖专业能力、心理韧性、团队协作精神</p>
+      </div>
+      <div class="roles-grid">
+        <div class="card role-card">
+          <div class="role-qual">博士</div>
+          <i class="fas fa-flask role-icon"></i>
+          <h3>科学家</h3>
+          <p>地质/生物/气候研究专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+        <div class="card role-card">
+          <div class="role-qual">硕士+</div>
+          <i class="fas fa-cogs role-icon"></i>
+          <h3>工程师</h3>
+          <p>生命支持/能源/建筑系统专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+        <div class="card role-card">
+          <div class="role-qual">医师</div>
+          <i class="fas fa-heartbeat role-icon"></i>
+          <h3>医疗团队</h3>
+          <p>太空医学/外科/心理专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+        <div class="card role-card">
+          <div class="role-qual">专家</div>
+          <i class="fas fa-users role-icon"></i>
+          <h3>运营专家</h3>
+          <p>资源管理/跨文化协作专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+      </div>
+      
+      <div class="apply-box">
+        <div class="apply-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <h3 class="gradient-text">首批100名定居者选拔中</h3>
+        <p class="text-space-light/80 text-lg mb-6">
+          2026-2028年进行极端环境模拟训练，2028年启程前往火星
+        </p>
+        <a href="#" class="btn btn-primary">提交申请</a>
+        <p class="mt-4 text-sm text-space-light/60">
+          选拔成功率：0.8% | 下一批申请开放：2026年3月
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <div class="logo">
+            <i class="fas fa-rocket logo-icon"></i>
+            <span>ARES COLONY</span>
+          </div>
+          <p class="text-space-light/70 mt-4">
+            人类首个火星永久定居计划，由全球航天机构与科研组织联合推进，目标在2040年前建立自给自足的人类文明前哨站。
+          </p>
+          <div class="social-links mt-6">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h4>任务阶段</h4>
+          <div class="footer-links">
+            <a href="#">轨道站建设</a>
+            <a href="#">无人货运任务</a>
+            <a href="#">首次载人登陆</a>
+            <a href="#">基地扩建</a>
+            <a href="#">生态闭环</a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h4>联系我们</h4>
+          <div class="footer-links">
+            <a href="#">📍 火星奥林帕斯基地建设指挥部<br>地球分部：海南文昌航天城</a>
+            <a href="#">✉️ apply@ares-colony.mars</a>
+            <a href="#">📡 深空通信频道：ARES-2040</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>ARES COLONY © 2025-2050 | 人类多星球文明计划 | 数据更新于2025年12月19日</p>
+        <p class="mt-2 text-xs">本页面为概念展示，实际任务规划以国际火星开发署(IMDA)官方文件为准</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 简单的滚动效果
+    document.addEventListener('DOMContentLoaded', function() {
+      const scrollLinks = document.querySelectorAll('a[href^="#"]');
+      
+      scrollLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // 导航栏滚动效果
+      window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+          nav.style.padding = '12px 0';
+          nav.style.backgroundColor = 'rgba(10, 14, 23, 0.95)';
+        } else {
+          nav.style.padding = '16px 0';
+          nav.style.backgroundColor = 'rgba(10, 14, 23, 0.8)';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
