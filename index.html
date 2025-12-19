@@ -1,722 +1,594 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Network - Protect Earth</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #2e7d32;
-            --secondary: #4caf50;
-            --accent: #8bc34a;
-            --light: #e8f5e9;
-            --dark: #1b5e20;
-            --text: #333333;
-            --white: #ffffff;
-        }
-
-        body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            font-size: 2rem;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: var(--white);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: var(--text);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-img {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .about-img:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem 1rem;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-item i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            color: var(--text);
-        }
-
-        .initiatives {
-            background-color: var(--white);
-        }
-
-        .initiatives-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .initiative-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .initiative-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .initiative-img {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .initiative-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .initiative-card:hover .initiative-img img {
-            transform: scale(1.1);
-        }
-
-        .initiative-content {
-            padding: 1.5rem;
-        }
-
-        .initiative-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .initiative-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .cta {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            text-align: center;
-            padding: 5rem 0;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta .btn {
-            background-color: var(--white);
-            color: var(--primary);
-        }
-
-        .cta .btn:hover {
-            background-color: var(--accent);
-            color: var(--white);
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        .footer-column p {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links li a {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 992px) {
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--primary);
-                flex-direction: column;
-                padding: 1rem 0;
-                text-align: center;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            }
-            
-            nav ul.active {
-                display: flex;
-            }
-            
-            nav ul li {
-                margin: 0;
-                padding: 0.8rem 0;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animation for stats counter */
-        .counter {
-            transition: all 0.5s ease;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-                <span>Green Network</span>
-            </div>
-            <nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#initiatives">Initiatives</a></li>
-                    <li><a href="#get-involved">Get Involved</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+import { useState, useEffect } from "react";
+import { 
+  Rocket, 
+  Building2, 
+  Users, 
+  Calendar, 
+  Zap, 
+  Globe, 
+  ChevronDown,
+  Leaf,
+  Database,
+  Brain,
+  Star,
+  Mountain
+} from "lucide-react";
+
+export default function App() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const missionTimeline = [
+    {
+      year: "2026",
+      title: "火星轨道站",
+      description: "部署首个载人火星轨道空间站，作为登陆中转基地",
+      icon: <Globe className="w-8 h-8 text-mars-accent" />
+    },
+    {
+      year: "2028",
+      title: "首个人类基地",
+      description: "建立永久性居住舱与生命维持系统，支持4名宇航员长期驻留",
+      icon: <Building2 className="w-8 h-8 text-mars-accent" />
+    },
+    {
+      year: "2032",
+      title: "水冰开采",
+      description: "启动极地水冰资源开采，实现氧气与燃料自给",
+      icon: <Zap className="w-8 h-8 text-mars-accent" />
+    },
+    {
+      year: "2040",
+      title: "封闭生态圈",
+      description: "建成10平方公里生物圈，实现食物60%自给",
+      icon: <Leaf className="w-8 h-8 text-mars-accent" />
+    },
+    {
+      year: "2050",
+      title: "城市雏形",
+      description: "人口突破1000人，建立首个穹顶城市，实现能源完全自给",
+      icon: <Users className="w-8 h-8 text-mars-accent" />
+    }
+  ];
+
+  const coreTechnologies = [
+    {
+      title: "核聚变推进",
+      description: "将火星航行时间从6个月缩短至45天",
+      icon: <Zap className="w-10 h-10" />,
+      gradient: "from-amber-400 to-rose-500"
+    },
+    {
+      title: "3D打印基地",
+      description: "使用火星土壤原位建造居住舱与基础设施",
+      icon: <Building2 className="w-10 h-10" />,
+      gradient: "from-cyan-400 to-blue-500"
+    },
+    {
+      title: "AI生态系统管理",
+      description: "自主调节生命支持系统与资源分配",
+      icon: <Brain className="w-10 h-10" />,
+      gradient: "from-emerald-400 to-teal-500"
+    },
+    {
+      title: "水培农业网络",
+      description: "零重力高效作物培育系统，单平方米年产粮150kg",
+      icon: <Leaf className="w-10 h-10" />,
+      gradient: "from-lime-400 to-green-600"
+    }
+  ];
+
+  const teamMembers = [
+    {
+      name: "Dr. Elena Rodriguez",
+      role: "首席地质学家",
+      expertise: "火星水文与资源勘探",
+      image: "https://placehold.co/300x300/1e3a8a/ffffff?text=Geologist"
+    },
+    {
+      name: "Dr. Kenji Tanaka",
+      role: "生命支持系统主任",
+      expertise: "封闭生态系统设计",
+      image: "https://placehold.co/300x300/4f1d0e/ffffff?text=Biologist"
+    },
+    {
+      name: "Commander Maya Singh",
+      role: "任务指挥官",
+      expertise: "深空任务领导与危机管理",
+      image: "https://placehold.co/300x300/1e293b/ffffff?text=Astronaut"
+    },
+    {
+      name: "Prof. David Chen",
+      role: "人工智能总监",
+      expertise: "自主系统与机器人集群",
+      image: "https://placehold.co/300x300/431407/ffffff?text=Engineer"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-space-dark text-space-light font-sans">
+      {/* 太空背景 */}
+      <div 
+        className="fixed inset-0 z-0 opacity-30"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.15) 0%, transparent 25%),
+            radial-gradient(circle at 30% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 30%)
+          `,
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed"
+        }}
+      >
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEuNSIgZmlsbD0iIzQ0NTRkZCIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==')] opacity-20"></div>
+      </div>
+
+      {/* 导航栏 */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrollY > 50 ? "bg-space-dark/90 backdrop-blur-sm py-2 shadow-lg" : "bg-transparent py-4"}`}>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <Rocket className="w-8 h-8 text-mars-accent animate-pulse" />
+            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
+              ARES COLONY
+            </span>
+          </div>
+          
+          <div className="hidden md:flex space-x-10">
+            {["探索", "基地", "科技", "时间线", "加入"].map((item) => (
+              <a 
+                key={item} 
+                href={`#${item.toLowerCase()}`} 
+                className="text-space-light/80 hover:text-mars-accent font-medium transition-all relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-mars-accent transition-all group-hover:w-full"></span>
+              </a>
+            ))}
+          </div>
+          
+          <button className="md:hidden text-space-light/80 hover:text-mars-accent">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-    </header>
+      </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <h1>Protect Our Planet, Preserve Our Future</h1>
-            <p>Join the global movement to create a sustainable world through conservation, education, and community action.</p>
-            <a href="#get-involved" class="btn">Join Our Network</a>
+      {/* 英雄区域 */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20"
+            style={{
+              backgroundImage: "url('https://placehold.co/1920x1080/1e3a8a/4f1d0e?text=Mars+Surface')",
+              maskImage: "linear-gradient(to bottom, transparent 10%, black 90%)"
+            }}
+          ></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-space-dark/30 to-space-dark"></div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Green Network</h2>
-                <p>We are a global community dedicated to environmental protection and sustainable development.</p>
-            </div>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Team planting trees">
-                </div>
-                <div class="about-text">
-                    <h3>Our Mission</h3>
-                    <p>Green Network is committed to creating a sustainable future by protecting natural ecosystems, promoting renewable energy, and empowering communities to take environmental action.</p>
-                    <p>Founded in 2010, we've grown from a small grassroots organization to an international network with over 50,000 members across 120 countries.</p>
-                    <p>Our approach combines scientific research, community engagement, and policy advocacy to address the most pressing environmental challenges of our time.</p>
-                    <a href="#" class="btn">Learn More</a>
-                </div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <i class="fas fa-tree"></i>
-                    <h3 class="counter" data-target="2500000">0</h3>
-                    <p>Trees Planted</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <h3 class="counter" data-target="50000">0</h3>
-                    <p>Active Members</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-globe-americas"></i>
-                    <h3 class="counter" data-target="120">0</h3>
-                    <p>Countries Reached</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-recycle"></i>
-                    <h3 class="counter" data-target="1500">0</h3>
-                    <p>Cleanup Projects</p>
-                </div>
-            </div>
+        
+        <div className="container mx-auto px-4 z-10 text-center max-w-4xl">
+          <div className="inline-block mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-rose-500/20 border border-amber-500/30">
+            <span className="text-amber-300 font-medium flex items-center justify-center">
+              <Star className="w-4 h-4 mr-2" /> 人类星际文明新纪元开启
+            </span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
+              首个人类火星永久定居点
+            </span>
+            <span className="mt-2 block text-space-light/90 text-2xl md:text-3xl font-light">
+              2040年前建立自给自足文明
+            </span>
+          </h1>
+          
+          <p className="text-xl text-space-light/80 mb-10">
+            人类首次成为跨行星物种，开启多星球文明时代
+          </p>
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <button className="px-8 py-4 bg-gradient-to-r from-mars-accent to-rose-600 hover:from-rose-500 hover:to-rose-600 text-white font-bold rounded-xl shadow-lg hover:shadow-rose-500/30 transition-all transform hover:-translate-y-1">
+              申请加入任务
+            </button>
+            <button className="px-8 py-4 bg-space-darker border border-mars-accent/30 hover:bg-space-dark/80 text-mars-accent font-bold rounded-xl transition-all">
+              探索基地设计
+            </button>
+          </div>
+          
+          <div className="mt-20 animate-bounce">
+            <ChevronDown className="w-8 h-8 mx-auto text-mars-accent/70" />
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Initiatives Section -->
-    <section class="initiatives" id="initiatives">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Initiatives</h2>
-                <p>Discover the key programs and projects we're implementing to protect our planet.</p>
-            </div>
-            <div class="initiatives-grid">
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://dialogue.earth/content/uploads/2021/04/lessons-from-the-rush-to-reforest-china-dialogue-2400x1599.jpg" alt="Reforestation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Global Reforestation</h3>
-                        <p>Planting millions of trees worldwide to restore ecosystems, combat climate change, and protect biodiversity.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Ocean Conservation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Ocean Conservation</h3>
-                        <p>Protecting marine ecosystems, reducing plastic pollution, and promoting sustainable fishing practices.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Renewable Energy">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Renewable Energy</h3>
-                        <p>Promoting solar, wind, and other clean energy sources to reduce dependence on fossil fuels.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-            </div>
+      {/* 为什么是火星 */}
+      <section id="探索" className="py-20 bg-space-dark relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-5">
+          <div className="absolute top-10 left-1/4 w-72 h-72 bg-amber-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-1/3 w-96 h-96 bg-rose-600 rounded-full blur-4xl"></div>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta" id="get-involved">
-        <div class="container">
-            <h2>Join Our Global Movement</h2>
-            <p>Together, we can create a sustainable future for generations to come. Every action counts, no matter how small.</p>
-            <a href="#" class="btn">Become a Member</a>
+        
+        <div className="container mx-auto px-4 z-10">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
+                为什么选择火星？
+              </span>
+            </h2>
+            <p className="text-space-light/80 text-lg">
+              基于NASA与ESA 20年探测数据，火星是太阳系内除地球外最宜居星球
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "水资源丰富",
+                description: "极地冰盖含水量超北美五大湖总和，地下冰层覆盖40%地表",
+                icon: <Mountain className="w-12 h-12 text-mars-accent" />
+              },
+              {
+                title: "24.5小时昼夜",
+                description: "与地球相似的自转周期，便于建立自然生物节律",
+                icon: <Calendar className="w-12 h-12 text-mars-accent" />
+              },
+              {
+                title: "二氧化碳大气",
+                description: "95% CO₂大气层可转化为氧气与燃料，土壤含植物必需矿物质",
+                icon: <Leaf className="w-12 h-12 text-mars-accent" />
+              }
+            ].map((item, index) => (
+              <div 
+                key={index} 
+                className="bg-space-darker/70 backdrop-blur-sm rounded-2xl p-8 border border-mars-accent/10 hover:border-mars-accent/30 transition-all relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-mars-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative z-10">
+                  <div className="mb-6">{item.icon}</div>
+                  <h3 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-mars-accent">
+                    {item.title}
+                  </h3>
+                  <p className="text-space-light/70 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Green Network</h3>
-                    <p>We are dedicated to protecting our planet through collaborative action, education, and sustainable solutions.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+      {/* 基地区域 */}
+      <section id="基地" className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-mars-accent">
+                奥林帕斯基地
+              </span>
+            </h2>
+            <p className="text-space-light/80 text-lg">
+              人类首个永久性火星定居点，2030年投入运营
+            </p>
+          </div>
+          
+          <div className="bg-space-darker/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-mars-accent/20">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              <div className="p-10 lg:p-16">
+                <div className="mb-8 flex items-center">
+                  <div className="p-3 bg-gradient-to-r from-amber-500/20 to-rose-500/20 rounded-xl mr-4">
+                    <Building2 className="w-8 h-8 text-amber-300" />
+                  </div>
+                  <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-mars-accent">
+                    基地核心架构
+                  </h3>
                 </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#initiatives">Initiatives</a></li>
-                        <li><a href="#get-involved">Get Involved</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Our Programs</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Reforestation</a></li>
-                        <li><a href="#">Ocean Cleanup</a></li>
-                        <li><a href="#">Wildlife Protection</a></li>
-                        <li><a href="#">Climate Education</a></li>
-                        <li><a href="#">Sustainable Agriculture</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Copper Creek Drive, New York</p>
-                    <p><i class="fas fa-phone"></i> +1 (312) 171-0771</p>
-                    <p><i class="fas fa-envelope"></i> support@greennetwork.org</p>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Green Network. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile Menu Toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('active');
-        });
-
-        // Counter Animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200; // The lower the slower
-            
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
                 
-                const inc = target / speed;
+                <div className="space-y-6 mb-10">
+                  {[
+                    {
+                      title: "防护穹顶",
+                      desc: "多层复合材料抵御辐射与微陨石，内部气压1个大气压"
+                    },
+                    {
+                      title: "地下居住区",
+                      desc: "20米深地下隧道网络，恒温22°C，防宇宙辐射"
+                    },
+                    {
+                      title: "资源循环系统",
+                      desc: "水回收率98%，空气再生率95%，食物生产自给率60%"
+                    }
+                  ].map((item, index) => (
+                    <div key={index} className="border-l-2 border-mars-accent pl-4 py-1">
+                      <h4 className="font-bold text-lg">{item.title}</h4>
+                      <p className="text-space-light/70">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
                 
-                if(count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(animateCounters, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            });
-        }
+                <div className="flex flex-wrap gap-4">
+                  <div className="bg-gradient-to-r from-purple-600/20 to-indigo-500/20 border border-purple-500/30 rounded-xl p-4 w-full sm:w-auto text-center">
+                    <div className="text-2xl font-bold text-purple-400">128</div>
+                    <div className="text-sm">居住单元</div>
+                  </div>
+                  <div className="bg-gradient-to-r from-cyan-600/20 to-teal-500/20 border border-cyan-500/30 rounded-xl p-4 w-full sm:w-auto text-center">
+                    <div className="text-2xl font-bold text-cyan-400">42</div>
+                    <div className="text-sm">科研实验室</div>
+                  </div>
+                  <div className="bg-gradient-to-r from-emerald-600/20 to-green-500/20 border border-emerald-500/30 rounded-xl p-4 w-full sm:w-auto text-center">
+                    <div className="text-2xl font-bold text-emerald-400">15</div>
+                    <div className="text-sm">生态穹顶</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="relative h-96 lg:h-auto">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: "url('https://placehold.co/800x600/431407/ffffff?text=Mars+Base')",
+                    clipPath: "polygon(0 0, 100% 0, 100% 85%, 0 100%)",
+                    WebkitClipPath: "polygon(0 0, 100% 0, 100% 85%, 0 100%)"
+                  }}
+                ></div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-space-dark to-transparent">
+                  <div className="text-center">
+                    <p className="text-mars-accent font-medium">奥林帕斯山脚下 · 北纬18.6°</p>
+                    <p className="text-space-light/80 text-sm mt-1">人类首个多星球文明前哨站</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        // Initialize counters when page loads
-        window.addEventListener('load', animateCounters);
+      {/* 核心科技 */}
+      <section id="科技" className="py-20 bg-space-darker relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <div className="absolute -top-20 -right-20 w-96 h-96 bg-gradient-to-br from-cyan-500 to-blue-700 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-gradient-to-br from-amber-500 to-rose-600 rounded-full blur-2xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 z-10">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-blue-400">
+                革命性技术
+              </span>
+            </h2>
+            <p className="text-space-light/80 text-lg">
+              突破性创新使火星定居成为现实
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {coreTechnologies.map((tech, index) => (
+              <div 
+                key={index}
+                className="bg-space-dark/70 backdrop-blur-sm rounded-2xl p-8 border border-cyan-500/10 hover:border-cyan-500/30 transition-all relative group overflow-hidden"
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${tech.gradient} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
+                <div className="relative z-10 text-center">
+                  <div className={`w-16 h-16 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br ${tech.gradient} mb-6 transform transition-transform group-hover:scale-110`}>
+                    {tech.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-blue-300">
+                    {tech.title}
+                  </h3>
+                  <p className="text-space-light/80 leading-relaxed">
+                    {tech.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
+      {/* 时间线 */}
+      <section id="时间线" className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
+                人类火星纪元
+              </span>
+            </h2>
+            <p className="text-space-light/80 text-lg">
+              从首次登陆到永久定居的里程碑
+            </p>
+          </div>
+          
+          <div className="relative max-w-4xl mx-auto">
+            {/* 时间线轨道 */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-mars-accent/30 to-purple-600/30 transform -translate-x-1/2 hidden md:block"></div>
+            
+            {missionTimeline.map((mission, index) => (
+              <div 
+                key={index} 
+                className={`flex flex-col md:flex-row ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} mb-12 group`}
+              >
+                <div className="md:w-5/12 relative mb-8 md:mb-0 flex justify-center">
+                  <div className="w-48 h-48 rounded-2xl bg-gradient-to-br from-purple-900/50 to-indigo-900/50 border-2 border-purple-500/30 flex items-center justify-center p-4 transform transition-transform hover:scale-105 group-hover:border-purple-500/60">
+                    {mission.icon}
+                    <div className="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-purple-600 border-2 border-space-dark flex items-center justify-center text-xs font-bold">
+                      {mission.year}
+                    </div>
+                  </div>
+                </div>
                 
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    document.querySelector('nav ul').classList.remove('active');
-                }
-            });
-        });
-    </script>
-</body>
+                <div className={`md:w-7/12 flex flex-col justify-center ${index % 2 === 0 ? 'md:items-end md:pr-16' : 'md:pl-16'}`}>
+                  <div className="bg-space-darker/70 backdrop-blur-sm border border-purple-500/20 rounded-xl p-6 max-w-md mx-auto md:mx-0 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="relative z-10">
+                      <div className="text-purple-400 font-medium mb-2">{mission.year} 里程碑</div>
+                      <h3 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-pink-400">
+                        {mission.title}
+                      </h3>
+                      <p className="text-space-light/80 leading-relaxed">
+                        {mission.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-</html>
+      {/* 加入我们 */}
+      <section id="加入" className="py-20 bg-gradient-to-b from-space-dark to-space-darker relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-30">
+          <div className="absolute top-10 right-10 w-48 h-48 bg-amber-500 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-mars-accent rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 z-10">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-400">
+                加入星际先驱者
+              </span>
+            </h2>
+            <p className="text-space-light/80 text-lg">
+              选拔要求：顶尖专业能力、心理韧性、团队协作精神
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {[
+              { title: "科学家", desc: "地质/生物/气候研究专家" },
+              { title: "工程师", desc: "生命支持/能源/建筑系统专家" },
+              { title: "医疗团队", desc: "太空医学/外科/心理专家" },
+              { title: "运营专家", desc: "资源管理/跨文化协作专家" }
+            ].map((role, index) => (
+              <div 
+                key={index}
+                className="bg-space-dark/60 backdrop-blur-sm rounded-2xl p-8 border border-amber-500/20 hover:border-amber-500/40 transition-all relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative z-10 text-center">
+                  <div className="text-amber-400 font-bold text-3xl mb-2">
+                    {["博士", "硕士+", "医师", "专家"][index]}
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-400">
+                    {role.title}
+                  </h3>
+                  <p className="text-space-light/70 mb-4">
+                    {role.desc}
+                  </p>
+                  <button className="px-4 py-2 text-sm bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-300 rounded-lg border border-amber-500/30 hover:border-amber-500/60 transition-all">
+                    申请条件
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="max-w-3xl mx-auto text-center bg-space-dark/80 backdrop-blur-sm rounded-2xl p-8 border border-amber-500/30">
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-rose-500 flex items-center justify-center">
+                <Star className="w-8 h-8 text-white" />
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-yellow-300">
+              首批100名定居者选拔中
+            </h3>
+            <p className="text-space-light/80 text-lg mb-6">
+              2026-2028年进行极端环境模拟训练，2028年启程前往火星
+            </p>
+            <button className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-yellow-500 hover:to-amber-600 text-space-dark font-bold rounded-xl shadow-lg hover:shadow-yellow-500/30 transition-all transform hover:-translate-y-1">
+              提交申请
+            </button>
+            <p className="mt-4 text-sm text-space-light/60">
+              选拔成功率：0.8% | 下一批申请开放：2026年3月
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 页脚 */}
+      <footer className="bg-space-darker border-t border-mars-accent/20 py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <div className="flex items-center mb-4">
+                <Rocket className="w-8 h-8 text-mars-accent mr-2" />
+                <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
+                  ARES COLONY
+                </span>
+              </div>
+              <p className="text-space-light/70 mb-6 max-w-xl">
+                人类首个火星永久定居计划，由全球航天机构与科研组织联合推进，目标在2040年前建立自给自足的人类文明前哨站。
+              </p>
+              
+              <div className="flex space-x-4">
+                {["https://placehold.co/40x40/1e3a8a/ffffff?text=F", "https://placehold.co/40x40/1e3a8a/ffffff?text=T", "https://placehold.co/40x40/1e3a8a/ffffff?text=I", "https://placehold.co/40x40/1e3a8a/ffffff?text=Y"].map((icon, index) => (
+                  <div key={index} className="w-10 h-10 rounded-full bg-space-dark flex items-center justify-center border border-mars-accent/20 hover:border-mars-accent transition-colors">
+                    {index === 0 && <span className="text-blue-400 font-bold">f</span>}
+                    {index === 1 && <span className="text-blue-500 font-bold">t</span>}
+                    {index === 2 && <span className="text-cyan-400 font-bold">in</span>}
+                    {index === 3 && <span className="text-red-500 font-bold">Y</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
+                任务阶段
+              </h4>
+              <ul className="space-y-3">
+                {["轨道站建设", "无人货运任务", "首次载人登陆", "基地扩建", "生态闭环"].map((item, index) => (
+                  <li key={index}>
+                    <a href="#" className="text-space-light/70 hover:text-mars-accent transition-colors flex items-center">
+                      <span className="w-1.5 h-1.5 bg-mars-accent rounded-full mr-3"></span>
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-mars-accent to-amber-300">
+                联系我们
+              </h4>
+              <ul className="space-y-3 text-space-light/70">
+                <li className="flex items-start">
+                  <span className="mt-1 mr-3">📍</span>
+                  <span>火星奥林帕斯基地建设指挥部<br />地球分部：海南文昌航天城</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mt-1 mr-3">✉️</span>
+                  <span>apply@ares-colony.mars</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mt-1 mr-3">📡</span>
+                  <span>深空通信频道：ARES-2040</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-mars-accent/20 mt-12 pt-8 text-center text-space-light/50 text-sm">
+            <p>
+              ARES COLONY © 2025-2050 | 人类多星球文明计划 | 数据更新于2025年12月19日
+            </p>
+            <p className="mt-2 text-xs">
+              本页面为概念展示，实际任务规划以国际火星开发署(IMDA)官方文件为准
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
