@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玄案录 - 探案玄幻世界</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #0a192f;
+            --secondary: #112240;
+            --accent: #64ffda;
+            --accent-dark: #52d1ac;
+            --text-light: #e6f1ff;
+            --text-gray: #8892b0;
+            --shadow: rgba(2, 12, 27, 0.7);
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: rgba(10, 25, 47, 0.95);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            padding: 180px 0 120px;
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(17, 34, 64, 0.9) 100%), 
+                        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(100, 255, 218, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(100, 255, 218, 0.05) 0%, transparent 50%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #e6f1ff, #64ffda);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--primary);
+            margin-left: 15px;
+        }
+        
+        .btn-accent:hover {
+            background-color: var(--accent-dark);
+            color: var(--primary);
+        }
+        
+        /* 特色区域 */
+        .features {
+            padding: 100px 0;
+            background-color: var(--secondary);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: var(--accent);
+            left: 20%;
+            bottom: -10px;
+        }
+        
+        .section-title p {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: rgba(10, 25, 47, 0.6);
+            border-radius: 8px;
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .feature-card p {
+            color: var(--text-gray);
+        }
+        
+        /* 角色展示 */
+        .characters {
+            padding: 100px 0;
+            background-color: var(--primary);
+        }
+        
+        .characters-slider {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        
+        .character-cards {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .character-card {
+            min-width: calc(33.333% - 20px);
+            margin-right: 30px;
+            background-color: var(--secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .character-card:hover {
+            opacity: 1;
+            transform: scale(1.03);
+        }
+        
+        .character-card:nth-child(3n) {
+            margin-right: 0;
+        }
+        
+        .character-img {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .character-info {
+            padding: 25px;
+        }
+        
+        .character-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+        
+        .character-info p {
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+        
+        .character-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .slider-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: var(--text-light);
+            border: none;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider-btn:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+        
+        /* 案件档案 */
+        .cases {
+            padding: 100px 0;
+            background-color: var(--secondary);
+        }
+        
+        .case-archive {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .case-item {
+            background-color: rgba(10, 25, 47, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .case-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .case-title {
+            font-size: 1.3rem;
+            color: var(--text-light);
+        }
+        
+        .case-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-solved {
+            background-color: rgba(100, 255, 218, 0.2);
+            color: var(--accent);
+        }
+        
+        .status-unsolved {
+            background-color: rgba(255, 100, 100, 0.2);
+            color: #ff6464;
+        }
+        
+        .case-content {
+            padding: 20px;
+        }
+        
+        .case-content p {
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #0a192f;
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .footer-about p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h3, .footer-newsletter h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 4px 0 0 4px;
+            color: var(--text-light);
+        }
+        
+        .newsletter-form button {
+            padding: 0 20px;
+            background-color: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--accent-dark);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .character-card {
+                min-width: calc(50% - 15px);
+            }
+            
+            .character-card:nth-child(3n) {
+                margin-right: 30px;
+            }
+            
+            .character-card:nth-child(2n) {
+                margin-right: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: transform 0.3s, opacity 0.3s;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                border-top: 1px solid rgba(100, 255, 218, 0.1);
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                margin-bottom: 10px;
+            }
+            
+            .character-card {
+                min-width: 100%;
+                margin-right: 0;
+            }
+            
+            .character-card:nth-child(3n), .character-card:nth-child(2n) {
+                margin-right: 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-card, .case-item {
+                padding: 20px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input, .newsletter-form button {
+                width: 100%;
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo"><i class="fas fa-book-dead"></i> 玄案录</a>
+                
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#features">故事特色</a></li>
+                    <li><a href="#characters">角色档案</a></li>
+                    <li><a href="#cases">案件卷宗</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                </ul>
+                
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">探索神秘玄幻世界的未解之谜</h1>
+                <p class="fade-in delay-1">在灵气复苏的现代都市，离奇案件接连发生。超自然力量与古老秘术交织，跟随我们的探案者一同揭开迷雾背后的真相，踏入一个充满诡秘与惊奇的玄幻探案世界。</p>
+                <div class="fade-in delay-2">
+                    <a href="#cases" class="btn">查看案件卷宗</a>
+                    <a href="#characters" class="btn btn-accent">认识探案角色</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色区域 -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>故事特色</h2>
+                <p>融合东方玄幻与现代探案的独特世界观，带你体验前所未有的悬疑之旅</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>阴阳双界</h3>
+                    <p>现实世界与灵异维度交织，案件往往横跨阴阳两界，需要特殊能力才能窥见真相。探案者需掌握通灵之术，与亡灵对话，解开生死之谜。</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-spells"></i>
+                    </div>
+                    <h3>古老秘术</h3>
+                    <p>失传的符咒、禁忌的法阵、神秘的仪式，每个案件背后都隐藏着古老的秘术。探案者需精通各种法术知识，方能破解凶手设下的迷局。</p>
+                </div>
+                
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon">
+                        <i class="fas fa-ghost"></i>
+                    </div>
+                    <h3>灵异现象</h3>
+                    <p>案件现场往往残留着超自然痕迹：无法解释的低温区、自动移动的物品、神秘的灵体影像。这些线索指向不可思议的真相。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 角色展示 -->
+    <section class="characters" id="characters">
+        <div class="container">
+            <div class="section-title">
+                <h2>主要角色</h2>
+                <p>与这些拥有特殊能力的探案者一同揭开谜团</p>
+            </div>
+            
+            <div class="characters-slider">
+                <div class="character-cards" id="characterCards">
+                    <div class="character-card">
+                        <div class="character-img" style="background-image: url('https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+                        <div class="character-info">
+                            <h3>林墨尘</h3>
+                            <p>拥有通灵之眼的年轻探员，能与亡灵沟通，看到常人无法察觉的灵异痕迹。性格冷静，思维缜密，擅长破解超自然案件。</p>
+                            <div>
+                                <span class="character-tag">通灵者</span>
+                                <span class="character-tag">符咒专家</span>
+                                <span class="character-tag">灵异侦探</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-img" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80');"></div>
+                        <div class="character-info">
+                            <h3>苏清音</h3>
+                            <p>古老驱魔世家的传人，精通各类法术与封印之术。擅长处理恶灵附身、邪术诅咒等危险案件，随身携带祖传的法器。</p>
+                            <div>
+                                <span class="character-tag">驱魔师</span>
+                                <span class="character-tag">法术大师</span>
+                                <span class="character-tag">封印专家</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-img" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80');"></div>
+                        <div class="character-info">
+                            <h3>陆天行</h3>
+                            <p>前刑警队长，因遭遇超自然案件而加入特殊案件调查组。具有极强的逻辑推理能力和刑侦经验，是团队中的理性支柱。</p>
+                            <div>
+                                <span class="character-tag">前刑警</span>
+                                <span class="character-tag">逻辑推理</span>
+                                <span class="character-tag">战术指挥</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-controls">
+                    <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 案件档案 -->
+    <section class="cases" id="cases">
+        <div class="container">
+            <div class="section-title">
+                <h2>案件卷宗</h2>
+                <p>近期处理的悬疑案件，部分仍迷雾重重</p>
+            </div>
+            
+            <div class="case-archive">
+                <div class="case-item fade-in">
+                    <div class="case-header">
+                        <h3 class="case-title">午夜古宅连环案</h3>
+                        <span class="case-status status-solved">已破解</span>
+                    </div>
+                    <div class="case-content">
+                        <p>城西百年古宅连续发生失踪事件，每到午夜时分，宅内会传出诡异琴声。调查发现与宅内被封印的怨灵有关，涉及一桩民国时期的冤案。</p>
+                        <p class="case-tags"><strong>标签：</strong>古宅怨灵、午夜琴声、民国秘辛</p>
+                    </div>
+                </div>
+                
+                <div class="case-item fade-in delay-1">
+                    <div class="case-header">
+                        <h3 class="case-title">镜中魅影系列案</h3>
+                        <span class="case-status status-unsolved">未破解</span>
+                    </div>
+                    <div class="case-content">
+                        <p>多名市民报告在镜子中看到不属于自己的倒影，随后出现记忆缺失或行为异常。怀疑与某种镜像空间法术有关，但施术者动机不明。</p>
+                        <p class="case-tags"><strong>标签：</strong>镜像空间、记忆窃取、未知法术</p>
+                    </div>
+                </div>
+                
+                <div class="case-item fade-in delay-2">
+                    <div class="case-header">
+                        <h3 class="case-title">血月祭祀事件</h3>
+                        <span class="case-status status-solved">已破解</span>
+                    </div>
+                    <div class="case-content">
+                        <p>血月之夜发生的连环命案，每个现场都发现了古老祭祀符号。调查指向一个试图召唤上古邪神的秘密教团，经过激烈交锋后成功阻止仪式。</p>
+                        <p class="case-tags"><strong>标签：</strong>邪神祭祀、古老教团、血月仪式</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="about">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <a href="#" class="footer-logo"><i class="fas fa-book-dead"></i> 玄案录</a>
+                    <p>《玄案录》是一个融合东方玄幻与现代探案的原创故事系列，讲述特殊能力者调查超自然案件的故事。我们致力于打造一个充满神秘与悬疑的幻想世界。</p>
+                    <div class="social-links">
+                        <a href="#" class="btn" style="margin-right: 10px;"><i class="fab fa-weixin"></i> 微信</a>
+                        <a href="#" class="btn"><i class="fab fa-weibo"></i> 微博</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#features">故事特色</a></li>
+                        <li><a href="#characters">角色档案</a></li>
+                        <li><a href="#cases">案件卷宗</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-newsletter">
+                    <h3>订阅案件更新</h3>
+                    <p>订阅我们的 Newsletter，第一时间获取最新案件故事和角色动态</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="请输入您的邮箱" required>
+                        <button type="submit">订阅</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 玄案录 - 探案玄幻世界. 所有内容均为原创，转载请注明出处。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // 角色滑动功能
+        const characterCards = document.getElementById('characterCards');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        const cardCount = document.querySelectorAll('.character-card').length;
+        
+        // 根据屏幕宽度计算每次滑动几张卡片
+        function getCardsPerView() {
+            if (window.innerWidth < 768) return 1;
+            if (window.innerWidth < 992) return 2;
+            return 3;
+        }
+        
+        function updateSliderPosition() {
+            const cardsPerView = getCardsPerView();
+            const cardWidth = document.querySelector('.character-card').offsetWidth + 30; // 包括margin-right
+            const maxIndex = cardCount - cardsPerView;
+            
+            if (currentIndex > maxIndex) currentIndex = maxIndex;
+            if (currentIndex < 0) currentIndex = 0;
+            
+            characterCards.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        }
+        
+        nextBtn.addEventListener('click', () => {
+            const cardsPerView = getCardsPerView();
+            const maxIndex = cardCount - cardsPerView;
+            
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateSliderPosition();
+            }
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSliderPosition();
+            }
+        });
+        
+        // 响应窗口大小变化
+        window.addEventListener('resize', () => {
+            updateSliderPosition();
+        });
+        
+        // 滚动动画
+        function checkScroll() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化滚动动画
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+        
+        // 初始化
+        checkScroll();
+        
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // 关闭移动端菜单
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 表单提交处理
+        const newsletterForm = document.querySelector('.newsletter-form');
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[type="email"]');
+            
+            if (emailInput.value) {
+                alert(`感谢订阅！我们将发送最新案件更新至: ${emailInput.value}`);
+                emailInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
