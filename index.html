@@ -1,967 +1,1067 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>玄案录 - 探案玄幻世界</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        }
-        
-        :root {
-            --primary: #0a192f;
-            --secondary: #112240;
-            --accent: #64ffda;
-            --accent-dark: #52d1ac;
-            --text-light: #e6f1ff;
-            --text-gray: #8892b0;
-            --shadow: rgba(2, 12, 27, 0.7);
-        }
-        
-        body {
-            background-color: var(--primary);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 导航栏 */
-        header {
-            background-color: rgba(10, 25, 47, 0.95);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-            backdrop-filter: blur(10px);
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-        
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            left: 0;
-            bottom: -5px;
-            transition: width 0.3s;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            font-size: 1.5rem;
-            color: var(--text-light);
-            cursor: pointer;
-        }
-        
-        /* 英雄区域 */
-        .hero {
-            padding: 180px 0 120px;
-            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(17, 34, 64, 0.9) 100%), 
-                        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(100, 255, 218, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(100, 255, 218, 0.05) 0%, transparent 50%);
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #e6f1ff, #64ffda);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            margin-bottom: 30px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            background-color: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background-color: rgba(100, 255, 218, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-accent {
-            background-color: var(--accent);
-            color: var(--primary);
-            margin-left: 15px;
-        }
-        
-        .btn-accent:hover {
-            background-color: var(--accent-dark);
-            color: var(--primary);
-        }
-        
-        /* 特色区域 */
-        .features {
-            padding: 100px 0;
-            background-color: var(--secondary);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--text-light);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            width: 60%;
-            height: 3px;
-            background: var(--accent);
-            left: 20%;
-            bottom: -10px;
-        }
-        
-        .section-title p {
-            color: var(--text-gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background-color: rgba(10, 25, 47, 0.6);
-            border-radius: 8px;
-            padding: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(100, 255, 218, 0.1);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(100, 255, 218, 0.3);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-        
-        .feature-card p {
-            color: var(--text-gray);
-        }
-        
-        /* 角色展示 */
-        .characters {
-            padding: 100px 0;
-            background-color: var(--primary);
-        }
-        
-        .characters-slider {
-            position: relative;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-        
-        .character-cards {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-        
-        .character-card {
-            min-width: calc(33.333% - 20px);
-            margin-right: 30px;
-            background-color: var(--secondary);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            opacity: 0.9;
-            transition: opacity 0.3s, transform 0.3s;
-        }
-        
-        .character-card:hover {
-            opacity: 1;
-            transform: scale(1.03);
-        }
-        
-        .character-card:nth-child(3n) {
-            margin-right: 0;
-        }
-        
-        .character-img {
-            height: 300px;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .character-info {
-            padding: 25px;
-        }
-        
-        .character-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--text-light);
-        }
-        
-        .character-info p {
-            color: var(--text-gray);
-            margin-bottom: 15px;
-        }
-        
-        .character-tag {
-            display: inline-block;
-            padding: 5px 10px;
-            background-color: rgba(100, 255, 218, 0.1);
-            color: var(--accent);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .slider-controls {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        
-        .slider-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--secondary);
-            color: var(--text-light);
-            border: none;
-            font-size: 1.2rem;
-            margin: 0 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .slider-btn:hover {
-            background-color: var(--accent);
-            color: var(--primary);
-        }
-        
-        /* 案件档案 */
-        .cases {
-            padding: 100px 0;
-            background-color: var(--secondary);
-        }
-        
-        .case-archive {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-        
-        .case-item {
-            background-color: rgba(10, 25, 47, 0.7);
-            border-radius: 8px;
-            overflow: hidden;
-            border-left: 4px solid var(--accent);
-        }
-        
-        .case-header {
-            padding: 20px;
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .case-title {
-            font-size: 1.3rem;
-            color: var(--text-light);
-        }
-        
-        .case-status {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .status-solved {
-            background-color: rgba(100, 255, 218, 0.2);
-            color: var(--accent);
-        }
-        
-        .status-unsolved {
-            background-color: rgba(255, 100, 100, 0.2);
-            color: #ff6464;
-        }
-        
-        .case-content {
-            padding: 20px;
-        }
-        
-        .case-content p {
-            color: var(--text-gray);
-            margin-bottom: 15px;
-        }
-        
-        /* 页脚 */
-        footer {
-            background-color: #0a192f;
-            padding: 60px 0 30px;
-            border-top: 1px solid rgba(100, 255, 218, 0.1);
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 15px;
-            display: block;
-        }
-        
-        .footer-about p {
-            color: var(--text-gray);
-            margin-bottom: 20px;
-        }
-        
-        .footer-links h3, .footer-newsletter h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            color: var(--text-light);
-        }
-        
-        .footer-links ul {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: var(--text-gray);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-        
-        .newsletter-form {
-            display: flex;
-            margin-top: 15px;
-        }
-        
-        .newsletter-form input {
-            flex: 1;
-            padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(100, 255, 218, 0.3);
-            border-radius: 4px 0 0 4px;
-            color: var(--text-light);
-        }
-        
-        .newsletter-form button {
-            padding: 0 20px;
-            background-color: var(--accent);
-            color: var(--primary);
-            border: none;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .newsletter-form button:hover {
-            background-color: var(--accent-dark);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .character-card {
-                min-width: calc(50% - 15px);
-            }
-            
-            .character-card:nth-child(3n) {
-                margin-right: 30px;
-            }
-            
-            .character-card:nth-child(2n) {
-                margin-right: 0;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: var(--primary);
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: transform 0.3s, opacity 0.3s;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-                border-top: 1px solid rgba(100, 255, 218, 0.1);
-            }
-            
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            
-            .nav-links li {
-                margin: 15px 0;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                margin-bottom: 10px;
-            }
-            
-            .character-card {
-                min-width: 100%;
-                margin-right: 0;
-            }
-            
-            .character-card:nth-child(3n), .character-card:nth-child(2n) {
-                margin-right: 0;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 150px 0 80px;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-            
-            .feature-card, .case-item {
-                padding: 20px;
-            }
-            
-            .newsletter-form {
-                flex-direction: column;
-            }
-            
-            .newsletter-form input, .newsletter-form button {
-                width: 100%;
-                border-radius: 4px;
-                margin-bottom: 10px;
-            }
-        }
-        
-        /* 动画效果 */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        .delay-1 {
-            animation-delay: 0.2s;
-        }
-        
-        .delay-2 {
-            animation-delay: 0.4s;
-        }
-        
-        .delay-3 {
-            animation-delay: 0.6s;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>火星定居计划 - 人类星际文明新纪元</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --space-dark: #0a0e17;
+      --space-darker: #080b12;
+      --space-light: #e0e0e0;
+      --mars-accent: #e63946;
+      --amber: #f77f00;
+      --cyan: #00b4d8;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--space-dark);
+      color: var(--space-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 30% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 30%);
+      background-size: cover;
+    }
+    
+    .bg-space-dark {
+      background-color: var(--space-dark);
+    }
+    
+    .bg-space-darker {
+      background-color: var(--space-darker);
+    }
+    
+    .text-space-light {
+      color: var(--space-light);
+    }
+    
+    .text-mars-accent {
+      color: var(--mars-accent);
+    }
+    
+    .gradient-text {
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      background-image: linear-gradient(to right, var(--mars-accent), #f77f00);
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+    }
+    
+    .card {
+      background: rgba(10, 14, 23, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+    }
+    
+    .icon-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.15) 0%, rgba(247, 127, 0, 0.15) 100%);
+    }
+    
+    /* 导航栏样式 */
+    nav {
+      position: fixed;
+      width: 100%;
+      z-index: 50;
+      transition: all 0.3s ease;
+      padding: 16px 0;
+      background: rgba(10, 14, 23, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(230, 57, 70, 0.1);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--mars-accent);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .nav-link {
+      color: rgba(224, 224, 224, 0.8);
+      text-decoration: none;
+      position: relative;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--mars-accent);
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--mars-accent);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* 英雄区域 */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 0;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://placehold.co/1920x1080/1e3a8a/4f1d0e?text=Mars+Surface') no-repeat center center/cover;
+      opacity: 0.2;
+      mask-image: linear-gradient(to bottom, transparent 10%, black 90%);
+    }
+    
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10, 14, 23, 0.3) 0%, var(--space-dark) 100%);
+    }
+    
+    .hero-content {
+      text-align: center;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(230, 57, 70, 0.15);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      margin-bottom: 24px;
+      color: #f77f00;
+      font-weight: 500;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    
+    .hero h2 {
+      font-size: 2rem;
+      color: rgba(224, 224, 224, 0.8);
+      margin-bottom: 32px;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      color: rgba(224, 224, 224, 0.8);
+      margin-bottom: 40px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 8px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      color: white;
+      box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(230, 57, 70, 0.4);
+    }
+    
+    .btn-secondary {
+      background: rgba(10, 14, 23, 0.7);
+      color: var(--mars-accent);
+      border: 1px solid rgba(230, 57, 70, 0.5);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(10, 14, 23, 0.9);
+      border-color: var(--mars-accent);
+    }
+    
+    .scroll-down {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(230, 57, 70, 0.7);
+      animation: bounce 2s infinite;
+      font-size: 24px;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-15px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+    }
+    
+    /* 为什么是火星 */
+    .section {
+      padding: 80px 0;
+      position: relative;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+    
+    .section-title p {
+      color: rgba(224, 224, 224, 0.8);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    
+    .feature-card {
+      padding: 32px;
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(230, 57, 70, 0.5);
+    }
+    
+    .feature-icon {
+      color: var(--mars-accent);
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #f77f00 0%, var(--mars-accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* 基地区域 */
+    .base-section {
+      background: linear-gradient(135deg, var(--space-darker) 0%, #0c0f19 100%);
+    }
+    
+    .base-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    
+    .base-content {
+      padding: 40px;
+    }
+    
+    .base-image {
+      position: relative;
+      height: 500px;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    
+    .base-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://placehold.co/800x600/431407/ffffff?text=Mars+Base') no-repeat center center/cover;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    }
+    
+    .base-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(to top, var(--space-dark), transparent);
+      text-align: center;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    
+    .stat-card {
+      background: rgba(230, 57, 70, 0.1);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--mars-accent);
+      margin-bottom: 4px;
+    }
+    
+    /* 核心科技 */
+    .tech-section {
+      background: linear-gradient(135deg, #0a0e17 0%, #080b12 100%);
+    }
+    
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    
+    .tech-card {
+      padding: 32px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tech-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 180, 216, 0.5);
+    }
+    
+    .tech-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+    }
+    
+    .tech-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    /* 时间线 */
+    .timeline-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .timeline-track {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, rgba(230, 57, 70, 0.3), rgba(100, 50, 200, 0.3));
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      display: flex;
+      margin-bottom: 40px;
+    }
+    
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    
+    .timeline-year {
+      width: 150px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .year-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--mars-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 16px;
+    }
+    
+    .timeline-content {
+      width: calc(50% - 75px);
+      padding: 24px;
+      border-radius: 16px;
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      position: relative;
+    }
+    
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      width: 20px;
+      height: 20px;
+      background: var(--space-dark);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      transform: rotate(45deg);
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content::before {
+      right: -10px;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content::before {
+      left: -10px;
+    }
+    
+    .timeline-content h3 {
+      color: var(--mars-accent);
+      margin-bottom: 8px;
+    }
+    
+    /* 加入我们 */
+    .join-section {
+      background: linear-gradient(135deg, var(--space-dark) 0%, #0c0f19 100%);
+    }
+    
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .role-card {
+      padding: 32px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .role-icon {
+      font-size: 40px;
+      color: var(--mars-accent);
+      margin-bottom: 20px;
+    }
+    
+    .role-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .role-qual {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(230, 57, 70, 0.15);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      margin-bottom: 16px;
+      color: var(--mars-accent);
+      font-weight: 500;
+    }
+    
+    .apply-box {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 32px;
+      border-radius: 20px;
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      text-align: center;
+    }
+    
+    .apply-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: white;
+      font-size: 28px;
+    }
+    
+    /* 页脚 */
+    footer {
+      background: var(--space-darker);
+      border-top: 1px solid rgba(230, 57, 70, 0.2);
+      padding: 48px 0 24px;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+    
+    .footer-col h4 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--mars-accent) 0%, #f77f00 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .footer-links a {
+      display: block;
+      color: rgba(224, 224, 224, 0.7);
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: color 0.3s ease;
+      position: relative;
+      padding-left: 12px;
+    }
+    
+    .footer-links a:hover {
+      color: var(--mars-accent);
+    }
+    
+    .footer-links a::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--mars-accent);
+      font-size: 1.5rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(10, 14, 23, 0.7);
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: var(--mars-accent);
+    }
+    
+    .social-icon:hover {
+      background: var(--mars-accent);
+      color: white;
+      transform: translateY(-3px);
+      border-color: var(--mars-accent);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(230, 57, 70, 0.1);
+      color: rgba(224, 224, 224, 0.5);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .base-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .base-image {
+        height: 400px;
+      }
+      
+      .timeline-item {
+        flex-direction: column !important;
+      }
+      
+      .timeline-year, .timeline-content {
+        width: 100% !important;
+      }
+      
+      .timeline-content::before {
+        display: none;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo"><i class="fas fa-book-dead"></i> 玄案录</a>
-                
-                <ul class="nav-links">
-                    <li><a href="#home">首页</a></li>
-                    <li><a href="#features">故事特色</a></li>
-                    <li><a href="#characters">角色档案</a></li>
-                    <li><a href="#cases">案件卷宗</a></li>
-                    <li><a href="#about">关于我们</a></li>
-                </ul>
-                
-                <div class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
+  <!-- 导航栏 -->
+  <nav>
+    <div class="container">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <i class="fas fa-rocket logo-icon"></i>
+          <span>ARES COLONY</span>
+        </a>
+        <div class="nav-links">
+          <a href="#why-mars" class="nav-link">探索</a>
+          <a href="#base" class="nav-link">基地</a>
+          <a href="#technology" class="nav-link">科技</a>
+          <a href="#timeline" class="nav-link">时间线</a>
+          <a href="#join" class="nav-link">加入</a>
         </div>
-    </header>
+      </div>
+    </div>
+  </nav>
 
-    <!-- 英雄区域 -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="fade-in">探索神秘玄幻世界的未解之谜</h1>
-                <p class="fade-in delay-1">在灵气复苏的现代都市，离奇案件接连发生。超自然力量与古老秘术交织，跟随我们的探案者一同揭开迷雾背后的真相，踏入一个充满诡秘与惊奇的玄幻探案世界。</p>
-                <div class="fade-in delay-2">
-                    <a href="#cases" class="btn">查看案件卷宗</a>
-                    <a href="#characters" class="btn btn-accent">认识探案角色</a>
-                </div>
-            </div>
+  <!-- 英雄区域 -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="badge">
+        <i class="fas fa-star"></i> 人类星际文明新纪元开启
+      </div>
+      <h1 class="gradient-text">首个人类火星永久定居点</h1>
+      <h2>2040年前建立自给自足文明</h2>
+      <p>人类首次成为跨行星物种，开启多星球文明时代</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">申请加入任务</a>
+        <a href="#" class="btn btn-secondary">探索基地设计</a>
+      </div>
+      <div class="scroll-down">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- 为什么是火星 -->
+  <section id="why-mars" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">为什么选择火星？</h2>
+        <p>基于NASA与ESA 20年探测数据，火星是太阳系内除地球外最宜居星球</p>
+      </div>
+      <div class="features-grid">
+        <div class="card feature-card">
+          <i class="fas fa-mountain feature-icon"></i>
+          <h3>水资源丰富</h3>
+          <p>极地冰盖含水量超北美五大湖总和，地下冰层覆盖40%地表</p>
         </div>
-    </section>
-
-    <!-- 特色区域 -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>故事特色</h2>
-                <p>融合东方玄幻与现代探案的独特世界观，带你体验前所未有的悬疑之旅</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>阴阳双界</h3>
-                    <p>现实世界与灵异维度交织，案件往往横跨阴阳两界，需要特殊能力才能窥见真相。探案者需掌握通灵之术，与亡灵对话，解开生死之谜。</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-1">
-                    <div class="feature-icon">
-                        <i class="fas fa-book-spells"></i>
-                    </div>
-                    <h3>古老秘术</h3>
-                    <p>失传的符咒、禁忌的法阵、神秘的仪式，每个案件背后都隐藏着古老的秘术。探案者需精通各种法术知识，方能破解凶手设下的迷局。</p>
-                </div>
-                
-                <div class="feature-card fade-in delay-2">
-                    <div class="feature-icon">
-                        <i class="fas fa-ghost"></i>
-                    </div>
-                    <h3>灵异现象</h3>
-                    <p>案件现场往往残留着超自然痕迹：无法解释的低温区、自动移动的物品、神秘的灵体影像。这些线索指向不可思议的真相。</p>
-                </div>
-            </div>
+        <div class="card feature-card">
+          <i class="fas fa-calendar feature-icon"></i>
+          <h3>24.5小时昼夜</h3>
+          <p>与地球相似的自转周期，便于建立自然生物节律</p>
         </div>
-    </section>
-
-    <!-- 角色展示 -->
-    <section class="characters" id="characters">
-        <div class="container">
-            <div class="section-title">
-                <h2>主要角色</h2>
-                <p>与这些拥有特殊能力的探案者一同揭开谜团</p>
-            </div>
-            
-            <div class="characters-slider">
-                <div class="character-cards" id="characterCards">
-                    <div class="character-card">
-                        <div class="character-img" style="background-image: url('https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
-                        <div class="character-info">
-                            <h3>林墨尘</h3>
-                            <p>拥有通灵之眼的年轻探员，能与亡灵沟通，看到常人无法察觉的灵异痕迹。性格冷静，思维缜密，擅长破解超自然案件。</p>
-                            <div>
-                                <span class="character-tag">通灵者</span>
-                                <span class="character-tag">符咒专家</span>
-                                <span class="character-tag">灵异侦探</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="character-card">
-                        <div class="character-img" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80');"></div>
-                        <div class="character-info">
-                            <h3>苏清音</h3>
-                            <p>古老驱魔世家的传人，精通各类法术与封印之术。擅长处理恶灵附身、邪术诅咒等危险案件，随身携带祖传的法器。</p>
-                            <div>
-                                <span class="character-tag">驱魔师</span>
-                                <span class="character-tag">法术大师</span>
-                                <span class="character-tag">封印专家</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="character-card">
-                        <div class="character-img" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80');"></div>
-                        <div class="character-info">
-                            <h3>陆天行</h3>
-                            <p>前刑警队长，因遭遇超自然案件而加入特殊案件调查组。具有极强的逻辑推理能力和刑侦经验，是团队中的理性支柱。</p>
-                            <div>
-                                <span class="character-tag">前刑警</span>
-                                <span class="character-tag">逻辑推理</span>
-                                <span class="character-tag">战术指挥</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="slider-controls">
-                    <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
+        <div class="card feature-card">
+          <i class="fas fa-leaf feature-icon"></i>
+          <h3>二氧化碳大气</h3>
+          <p>95% CO₂大气层可转化为氧气与燃料，土壤含植物必需矿物质</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 案件档案 -->
-    <section class="cases" id="cases">
-        <div class="container">
-            <div class="section-title">
-                <h2>案件卷宗</h2>
-                <p>近期处理的悬疑案件，部分仍迷雾重重</p>
+  <!-- 基地区域 -->
+  <section id="base" class="section base-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">奥林帕斯基地</h2>
+        <p>人类首个永久性火星定居点，2030年投入运营</p>
+      </div>
+      <div class="base-container">
+        <div class="base-content">
+          <div class="flex items-center mb-8">
+            <div class="icon-box">
+              <i class="fas fa-building"></i>
             </div>
-            
-            <div class="case-archive">
-                <div class="case-item fade-in">
-                    <div class="case-header">
-                        <h3 class="case-title">午夜古宅连环案</h3>
-                        <span class="case-status status-solved">已破解</span>
-                    </div>
-                    <div class="case-content">
-                        <p>城西百年古宅连续发生失踪事件，每到午夜时分，宅内会传出诡异琴声。调查发现与宅内被封印的怨灵有关，涉及一桩民国时期的冤案。</p>
-                        <p class="case-tags"><strong>标签：</strong>古宅怨灵、午夜琴声、民国秘辛</p>
-                    </div>
-                </div>
-                
-                <div class="case-item fade-in delay-1">
-                    <div class="case-header">
-                        <h3 class="case-title">镜中魅影系列案</h3>
-                        <span class="case-status status-unsolved">未破解</span>
-                    </div>
-                    <div class="case-content">
-                        <p>多名市民报告在镜子中看到不属于自己的倒影，随后出现记忆缺失或行为异常。怀疑与某种镜像空间法术有关，但施术者动机不明。</p>
-                        <p class="case-tags"><strong>标签：</strong>镜像空间、记忆窃取、未知法术</p>
-                    </div>
-                </div>
-                
-                <div class="case-item fade-in delay-2">
-                    <div class="case-header">
-                        <h3 class="case-title">血月祭祀事件</h3>
-                        <span class="case-status status-solved">已破解</span>
-                    </div>
-                    <div class="case-content">
-                        <p>血月之夜发生的连环命案，每个现场都发现了古老祭祀符号。调查指向一个试图召唤上古邪神的秘密教团，经过激烈交锋后成功阻止仪式。</p>
-                        <p class="case-tags"><strong>标签：</strong>邪神祭祀、古老教团、血月仪式</p>
-                    </div>
-                </div>
+            <h3 class="gradient-text">基地核心架构</h3>
+          </div>
+          
+          <div class="space-y-6 mb-10">
+            <div class="border-l-2 border-mars-accent pl-4 py-1">
+              <h4 class="font-bold text-lg">防护穹顶</h4>
+              <p>多层复合材料抵御辐射与微陨石，内部气压1个大气压</p>
             </div>
+            <div class="border-l-2 border-mars-accent pl-4 py-1">
+              <h4 class="font-bold text-lg">地下居住区</h4>
+              <p>20米深地下隧道网络，恒温22°C，防宇宙辐射</p>
+            </div>
+            <div class="border-l-2 border-mars-accent pl-4 py-1">
+              <h4 class="font-bold text-lg">资源循环系统</h4>
+              <p>水回收率98%，空气再生率95%，食物生产自给率60%</p>
+            </div>
+          </div>
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">128</div>
+              <div>居住单元</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">42</div>
+              <div>科研实验室</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">15</div>
+              <div>生态穹顶</div>
+            </div>
+          </div>
         </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer id="about">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <a href="#" class="footer-logo"><i class="fas fa-book-dead"></i> 玄案录</a>
-                    <p>《玄案录》是一个融合东方玄幻与现代探案的原创故事系列，讲述特殊能力者调查超自然案件的故事。我们致力于打造一个充满神秘与悬疑的幻想世界。</p>
-                    <div class="social-links">
-                        <a href="#" class="btn" style="margin-right: 10px;"><i class="fab fa-weixin"></i> 微信</a>
-                        <a href="#" class="btn"><i class="fab fa-weibo"></i> 微博</a>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>快速链接</h3>
-                    <ul>
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="#features">故事特色</a></li>
-                        <li><a href="#characters">角色档案</a></li>
-                        <li><a href="#cases">案件卷宗</a></li>
-                        <li><a href="#about">关于我们</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-newsletter">
-                    <h3>订阅案件更新</h3>
-                    <p>订阅我们的 Newsletter，第一时间获取最新案件故事和角色动态</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="请输入您的邮箱" required>
-                        <button type="submit">订阅</button>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 玄案录 - 探案玄幻世界. 所有内容均为原创，转载请注明出处。</p>
-            </div>
+        <div class="base-image">
+          <div class="base-info">
+            <p class="text-mars-accent font-medium">奥林帕斯山脚下 · 北纬18.6°</p>
+            <p class="text-space-light/80 text-sm mt-1">人类首个多星球文明前哨站</p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // 移动端菜单切换
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
+  <!-- 核心科技 -->
+  <section id="technology" class="section tech-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">革命性技术</h2>
+        <p>突破性创新使火星定居成为现实</p>
+      </div>
+      <div class="tech-grid">
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3>核聚变推进</h3>
+          <p>将火星航行时间从6个月缩短至45天</p>
+        </div>
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <h3>3D打印基地</h3>
+          <p>使用火星土壤原位建造居住舱与基础设施</p>
+        </div>
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>AI生态系统管理</h3>
+          <p>自主调节生命支持系统与资源分配</p>
+        </div>
+        <div class="card tech-card">
+          <div class="tech-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3>水培农业网络</h3>
+          <p>零重力高效作物培育系统，单平方米年产粮150kg</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 时间线 -->
+  <section id="timeline" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">人类火星纪元</h2>
+        <p>从首次登陆到永久定居的里程碑</p>
+      </div>
+      <div class="timeline-container">
+        <div class="timeline-track"></div>
         
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2026</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2026 里程碑</div>
+            <h3>火星轨道站</h3>
+            <p>部署首个载人火星轨道空间站，作为登陆中转基地</p>
+          </div>
+        </div>
         
-        // 角色滑动功能
-        const characterCards = document.getElementById('characterCards');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        let currentIndex = 0;
-        const cardCount = document.querySelectorAll('.character-card').length;
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2028</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2028 里程碑</div>
+            <h3>首个人类基地</h3>
+            <p>建立永久性居住舱与生命维持系统，支持4名宇航员长期驻留</p>
+          </div>
+        </div>
         
-        // 根据屏幕宽度计算每次滑动几张卡片
-        function getCardsPerView() {
-            if (window.innerWidth < 768) return 1;
-            if (window.innerWidth < 992) return 2;
-            return 3;
-        }
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2032</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2032 里程碑</div>
+            <h3>水冰开采</h3>
+            <p>启动极地水冰资源开采，实现氧气与燃料自给</p>
+          </div>
+        </div>
         
-        function updateSliderPosition() {
-            const cardsPerView = getCardsPerView();
-            const cardWidth = document.querySelector('.character-card').offsetWidth + 30; // 包括margin-right
-            const maxIndex = cardCount - cardsPerView;
-            
-            if (currentIndex > maxIndex) currentIndex = maxIndex;
-            if (currentIndex < 0) currentIndex = 0;
-            
-            characterCards.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-        }
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2040</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2040 里程碑</div>
+            <h3>封闭生态圈</h3>
+            <p>建成10平方公里生物圈，实现食物60%自给</p>
+          </div>
+        </div>
         
-        nextBtn.addEventListener('click', () => {
-            const cardsPerView = getCardsPerView();
-            const maxIndex = cardCount - cardsPerView;
-            
-            if (currentIndex < maxIndex) {
-                currentIndex++;
-                updateSliderPosition();
-            }
-        });
+        <div class="timeline-item">
+          <div class="timeline-year">
+            <div class="year-circle">2050</div>
+          </div>
+          <div class="timeline-content">
+            <div class="text-mars-accent font-medium mb-2">2050 里程碑</div>
+            <h3>城市雏形</h3>
+            <p>人口突破1000人，建立首个穹顶城市，实现能源完全自给</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 加入我们 -->
+  <section id="join" class="section join-section">
+    <div class="container">
+      <div class="section-title">
+        <h2 class="gradient-text">加入星际先驱者</h2>
+        <p>选拔要求：顶尖专业能力、心理韧性、团队协作精神</p>
+      </div>
+      <div class="roles-grid">
+        <div class="card role-card">
+          <div class="role-qual">博士</div>
+          <i class="fas fa-flask role-icon"></i>
+          <h3>科学家</h3>
+          <p>地质/生物/气候研究专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+        <div class="card role-card">
+          <div class="role-qual">硕士+</div>
+          <i class="fas fa-cogs role-icon"></i>
+          <h3>工程师</h3>
+          <p>生命支持/能源/建筑系统专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+        <div class="card role-card">
+          <div class="role-qual">医师</div>
+          <i class="fas fa-heartbeat role-icon"></i>
+          <h3>医疗团队</h3>
+          <p>太空医学/外科/心理专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+        <div class="card role-card">
+          <div class="role-qual">专家</div>
+          <i class="fas fa-users role-icon"></i>
+          <h3>运营专家</h3>
+          <p>资源管理/跨文化协作专家</p>
+          <a href="#" class="btn btn-secondary">申请条件</a>
+        </div>
+      </div>
+      
+      <div class="apply-box">
+        <div class="apply-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <h3 class="gradient-text">首批100名定居者选拔中</h3>
+        <p class="text-space-light/80 text-lg mb-6">
+          2026-2028年进行极端环境模拟训练，2028年启程前往火星
+        </p>
+        <a href="#" class="btn btn-primary">提交申请</a>
+        <p class="mt-4 text-sm text-space-light/60">
+          选拔成功率：0.8% | 下一批申请开放：2026年3月
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-col">
+          <div class="logo">
+            <i class="fas fa-rocket logo-icon"></i>
+            <span>ARES COLONY</span>
+          </div>
+          <p class="text-space-light/70 mt-4">
+            人类首个火星永久定居计划，由全球航天机构与科研组织联合推进，目标在2040年前建立自给自足的人类文明前哨站。
+          </p>
+          <div class="social-links mt-6">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
         
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSliderPosition();
-            }
-        });
+        <div class="footer-col">
+          <h4>任务阶段</h4>
+          <div class="footer-links">
+            <a href="#">轨道站建设</a>
+            <a href="#">无人货运任务</a>
+            <a href="#">首次载人登陆</a>
+            <a href="#">基地扩建</a>
+            <a href="#">生态闭环</a>
+          </div>
+        </div>
         
-        // 响应窗口大小变化
-        window.addEventListener('resize', () => {
-            updateSliderPosition();
-        });
-        
-        // 滚动动画
-        function checkScroll() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            fadeElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementTop < windowHeight - 100) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
+        <div class="footer-col">
+          <h4>联系我们</h4>
+          <div class="footer-links">
+            <a href="#">📍 火星奥林帕斯基地建设指挥部<br>地球分部：海南文昌航天城</a>
+            <a href="#">✉️ apply@ares-colony.mars</a>
+            <a href="#">📡 深空通信频道：ARES-2040</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>ARES COLONY © 2025-2050 | 人类多星球文明计划 | 数据更新于2025年12月19日</p>
+        <p class="mt-2 text-xs">本页面为概念展示，实际任务规划以国际火星开发署(IMDA)官方文件为准</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 简单的滚动效果
+    document.addEventListener('DOMContentLoaded', function() {
+      const scrollLinks = document.querySelectorAll('a[href^="#"]');
+      
+      scrollLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
             });
+          }
+        });
+      });
+      
+      // 导航栏滚动效果
+      window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+          nav.style.padding = '12px 0';
+          nav.style.backgroundColor = 'rgba(10, 14, 23, 0.95)';
+        } else {
+          nav.style.padding = '16px 0';
+          nav.style.backgroundColor = 'rgba(10, 14, 23, 0.8)';
         }
-        
-        // 初始化滚动动画
-        window.addEventListener('scroll', checkScroll);
-        window.addEventListener('load', checkScroll);
-        
-        // 初始化
-        checkScroll();
-        
-        // 平滑滚动到锚点
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    // 关闭移动端菜单
-                    if (navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                    }
-                    
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // 表单提交处理
-        const newsletterForm = document.querySelector('.newsletter-form');
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input[type="email"]');
-            
-            if (emailInput.value) {
-                alert(`感谢订阅！我们将发送最新案件更新至: ${emailInput.value}`);
-                emailInput.value = '';
-            }
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
